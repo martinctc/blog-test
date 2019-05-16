@@ -1,0 +1,1078 @@
+
+
+
+    
+
+
+
+
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <script type="application/ld+json">
+    {
+        "@context" : "http://schema.org",
+        "@type" : "BlogPosting",
+        "mainEntityOfPage": {
+             "@type": "WebPage",
+             "@id": "\/"
+        },
+        "articleSection" : "blog",
+        "name" : "Using data.table with magrittr pipes: best of both worlds",
+        "headline" : "Using data.table with magrittr pipes: best of both worlds",
+        "description" : "Should we use magrittr pipes with data.table?\n Why ask the question? If you are fairly new to R, you might find it puzzling \/ intriguing that R questions on Stack Overflow tend to attract a range of solutions which all have different syntax “styles”, but almost all seem to be valid answers to some extent (as indicated by the number of upvotes to the solution). This is because there are three main syntax styles in the R universe:",
+        "inLanguage" : "en",
+        "author" : "",
+        "creator" : "",
+        "publisher": "",
+        "accountablePerson" : "",
+        "copyrightHolder" : "",
+        "copyrightYear" : "0001",
+        "datePublished": "0001-01-01 00:00:00 \x2b0000 UTC",
+        "dateModified" : "0001-01-01 00:00:00 \x2b0000 UTC",
+        "url" : "\/blog\/2019-04-21-using-data.table-with-magrittr-pipes-best-of-both-worlds\/",
+        "wordCount" : "1222",
+        "keywords" : [ "Blog" ]
+    }
+    </script>
+        
+            <title>Using data.table with magrittr pipes: best of both worlds - Martin Chan</title>
+        
+
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="generator" content="Hugo 0.55.5" />
+        
+
+
+        
+            <meta name="author" content="Martin Chan">
+        
+        
+            
+                <meta name="description" content="Consulting and Analytics">
+            
+        
+
+        <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Using data.table with magrittr pipes: best of both worlds"/>
+<meta name="twitter:description" content="Should we use magrittr pipes with data.table?
+ Why ask the question? If you are fairly new to R, you might find it puzzling / intriguing that R questions on Stack Overflow tend to attract a range of solutions which all have different syntax “styles”, but almost all seem to be valid answers to some extent (as indicated by the number of upvotes to the solution). This is because there are three main syntax styles in the R universe:"/>
+<meta name="twitter:site" content="@https://twitter.com/martin_rstats"/>
+
+        <meta property="og:title" content="Using data.table with magrittr pipes: best of both worlds" />
+<meta property="og:description" content="Should we use magrittr pipes with data.table?
+ Why ask the question? If you are fairly new to R, you might find it puzzling / intriguing that R questions on Stack Overflow tend to attract a range of solutions which all have different syntax “styles”, but almost all seem to be valid answers to some extent (as indicated by the number of upvotes to the solution). This is because there are three main syntax styles in the R universe:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/blog/2019-04-21-using-data.table-with-magrittr-pipes-best-of-both-worlds/" />
+
+
+        <meta property="og:image" content="//images/logo.png">
+        <meta property="og:image:type" content="image/png">
+        <meta property="og:image:width" content="512">
+        <meta property="og:image:height" content="512">
+        
+<meta itemprop="name" content="Using data.table with magrittr pipes: best of both worlds">
+<meta itemprop="description" content="Should we use magrittr pipes with data.table?
+ Why ask the question? If you are fairly new to R, you might find it puzzling / intriguing that R questions on Stack Overflow tend to attract a range of solutions which all have different syntax “styles”, but almost all seem to be valid answers to some extent (as indicated by the number of upvotes to the solution). This is because there are three main syntax styles in the R universe:">
+
+
+
+<meta itemprop="wordCount" content="1222">
+
+
+
+<meta itemprop="keywords" content="" />
+
+        
+
+        
+            
+        
+
+        
+        
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,800,900|Source+Sans+Pro:400,700">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.css">
+            <link rel="stylesheet" href="/css/main.css">
+            <link rel="stylesheet" href="/css/add-on.css">
+            <link rel="stylesheet" href="/css/academicons.min.css">
+        
+
+        
+            
+                
+            
+        
+
+
+  
+    
+    <link href='//cdn.bootcss.com/highlight.js/9.11.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+  
+
+
+      
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-138721086-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+    </head>
+    <body>
+
+      
+      <div id="wrapper">
+
+    
+<header id="header">
+    
+      <h1><a href="/">blog</a></h1>
+    
+
+    <nav class="links">
+        <ul>
+            
+                <li>
+                    <a href="/">
+                            <i class="fa fa-home">&nbsp;</i>Home
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/about/">
+                            <i class="fa fa-id-card-o">&nbsp;</i>About
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/blog/">
+                            <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/itemized/">
+                            <i class="fa fa-list">&nbsp;</i>Itemized
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/categories/">
+                            <i class="fa fa-sitemap">&nbsp;</i>Categories
+                    </a>
+                </li>
+            
+                <li>
+                    <a href="/contact/">
+                            <i class="fa fa-envelope-o">&nbsp;</i>Contact
+                    </a>
+                </li>
+            
+        </ul>
+    </nav>
+    <nav class="main">
+        <ul>
+            
+            <li class="search">
+                <a class="fa-search" href="#search">Search</a>
+                <form id="search" method="get" action="//google.com/search">
+                    <input type="text" name="q" placeholder="Search" />
+                    <input type="hidden" name="as_sitesearch" value="/">
+                </form>
+            </li>
+            <li class="menu">
+                <a class="fa-bars" href="#menu">Menu</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+
+<section id="menu">
+
+    
+        <section>
+            <form class="search" method="get" action="//google.com/search">
+                <input type="text" name="q" placeholder="Search" />
+                <input type="hidden" name="as_sitesearch" value="/">
+            </form>
+        </section>
+
+    
+        <section>
+            <ul class="links">
+                
+                    <li>
+                        <a href="/">
+                            <h3>
+                                <i class="fa fa-home">&nbsp;</i>Home
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/about/">
+                            <h3>
+                                <i class="fa fa-id-card-o">&nbsp;</i>About
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/blog/">
+                            <h3>
+                                <i class="fa fa-newspaper-o">&nbsp;</i>Blog
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/itemized/">
+                            <h3>
+                                <i class="fa fa-list">&nbsp;</i>Itemized
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/categories/">
+                            <h3>
+                                <i class="fa fa-sitemap">&nbsp;</i>Categories
+                            </h3>
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a href="/contact/">
+                            <h3>
+                                <i class="fa fa-envelope-o">&nbsp;</i>Contact
+                            </h3>
+                        </a>
+                    </li>
+                
+            </ul>
+        </section>
+
+    
+        <section class="recent-posts">
+            <div class="mini-posts">
+                <header>
+                    <h3>Recent Posts</h3>
+                </header>
+                
+
+                
+                    
+                
+
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/post/">Post</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-05-16'>
+                                    May 16, 2019</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/post/test-post/">Welcome!</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-05-16'>
+                                    May 16, 2019</time>
+                            </header>
+                            
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/2019-04-19-a-short-r-package-review-rqda/">A Short Package Review - RQDA</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-04-15'>
+                                    April 15, 2019</time>
+                            </header>
+                            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/2019-04-19-a-short-r-package-review-rqda/" class="image featured">
+            <img src="/img/2019/04/pic02.jpg" alt="">
+        </a>
+    
+
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/2019-04-13-first-post/">First Post</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2019-04-13'>
+                                    April 13, 2019</time>
+                            </header>
+                            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/2019-04-13-first-post/" class="image featured">
+            <img src="/img/2019/04/pic03.jpg" alt="">
+        </a>
+    
+
+
+                        </article>
+                
+                        <article class="mini-post">
+                            <header>
+                                <h3><a href="/blog/creating-a-new-theme/">Creating a New Theme</a></h3>
+                                
+                                <time class="published" datetime=
+                                    '2014-09-28'>
+                                    September 28, 2014</time>
+                            </header>
+                            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/creating-a-new-theme/" class="image featured">
+            <img src="/img/2014/09/pic03.jpg" alt="">
+        </a>
+    
+
+
+                        </article>
+                
+
+                
+                    <a href=
+                        
+                            /blog/
+                        
+                        class="button">View more posts</a>
+                
+            </div>
+        </section>
+
+    
+        
+</section>
+
+    
+    <div id="main">
+        <article class="post">
+            
+            <header>
+    <div class="title">
+        
+            <h1><a href="/blog/2019-04-21-using-data.table-with-magrittr-pipes-best-of-both-worlds/">Using data.table with magrittr pipes: best of both worlds</a></h1>
+            
+        
+        
+    </div>
+</header>
+
+            <div id="content">
+                <section class="main-content">
+<blockquote>
+<p>Should we use magrittr pipes with data.table?</p>
+</blockquote>
+<div id="why-ask-the-question" class="section level2">
+<h2>Why ask the question?</h2>
+<p>If you are fairly new to R, you might find it puzzling / intriguing that R questions on Stack Overflow tend to attract a range of solutions which all have different syntax “styles”, but almost all seem to be valid answers to some extent (as indicated by the number of upvotes to the solution). This is because there are three main syntax styles in the R universe:</p>
+<p><img src="{{ site.url }}{{ site.baseurl }}/images/Rlogo.png" width="20%" style="float:right; padding:10px" /></p>
+<ol style="list-style-type: decimal">
+<li><strong>base R</strong> - This refers to a syntax style that mostly utilises functions and operators available within the basic packages, notably <strong>base</strong> but also <strong>stats</strong>. These are packages that are loaded automatically when you start up R.<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> In the context of <code>iris</code> dataset, the use of <code>iris$Species</code> or <code>iris[[&quot;Species&quot;]]</code> to refer to columns, or <code>subset(iris, Species == &quot;setosa&quot;)</code> to subset/filter rows are characteristic of the base R style. Impressionistically speaking, I’d say that R code written prior to 2014 (based on books and Stack Overflow solutions) are generally more likely to be in this style. (<strong>dplyr</strong> superseded <strong>plyr</strong> in 2014)<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></li>
+</ol>
+<p><img src="{{ site.url }}{{ site.baseurl }}/images/hex-tidyverse.png" width="20%" style="float:right; padding:10px" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>tidyverse / dplyr style</strong> - This is a style that is increasingly becoming the ‘standard’ style for data analysis due to its superb readability and consistency with an ecosystem of packages e.g. “official” tidyverse packages such as <strong>stringr</strong> and <strong>purrr</strong>, but also packages written with the same principles in mind such as <strong>tidytext</strong>, <strong>tidyquant</strong>, and <strong>srvyr</strong>, to name a few. The tidyverse style is based on a set of <a href="https://tidyverse.tidyverse.org/articles/manifesto.html">principles</a> which is designed to enhance analysis through greater readability and reproducibility. The hallmark of this style is the <code>%&gt;%</code> pipe operator (from the <strong>magrittr</strong> package), which chains up analysis operations in a way that enables you to “read” code in the form of “do x, then do y, then do z”. Other functions (also called <strong>dplyr</strong> ‘verbs’ of data manipulation) that are characteristic of this style include <code>mutate()</code>, <code>filter()</code>, and <code>group_by()</code>.</li>
+</ol>
+<p><img src="{{ site.url }}{{ site.baseurl }}/images/r-datatable.png" width="20%" style="float:right; padding:10px" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>data.table style</strong> - Unlike the tidyverse style, the data.table style is based off a single package: <a href="https://github.com/Rdatatable/data.table/wiki">data.table</a>. The package description for data.table puts it as:</li>
+</ol>
+<blockquote>
+<p><em>“Fast aggregation of large data (e.g. 100GB in RAM), fast ordered joins, fast add/modify/delete of columns by group using no copies at all, list columns, friendly and fast character-separated-value read/write. Offers a natural and flexible syntax, for faster development.”</em></p>
+</blockquote>
+<p>The key advantage that I value in data.table is its speed, especially when working with grouping operations that involve a large number of groups (e.g. analysis by PEOPLE groups in a VISIT/TRANSACTION level database), where my experience is that it is much faster than dplyr. Syntax-wise, it is fairly readable, perhaps somewhere in between <strong>tidyverse</strong> and <strong>base</strong>, where I’d say <strong>tidyverse</strong> is most readable, and least for <strong>base</strong> (Caveat: there is always an element of subjectivity in this - whatever you are most familiar with you tend to to find easier to read!).</p>
+<hr />
+<p>Okay, now to the main point of this post.</p>
+<p>All these three styles mentioned above have their own pros and cons, but the general convention is that one should stick with a single style in the same piece of analysis, so that other people can more easily what you are doing, enabling easier collaboration and greater reproducibility. As a general rule, consistency of style is good practice - imagine trying to read someone else’s analysis where they filter a row in three different ways! 🙈</p>
+<p>But what if I had a legitimate reason for combining these styles in my code?</p>
+</div>
+<div id="use-case-combining-magrittr-pipes-and-data.table" class="section level2">
+<h2>Use Case: Combining magrittr pipes and data.table</h2>
+<p>I’ve once worked on a piece of analysis where I used the tidyverse style (i.e. <strong>dplyr</strong> verbs + <strong>magrittr</strong> pipes), chiefly for its advantageous of being very readable and intuitive. Everything worked fine when I was only dealing with the summarised numbers from the analysis, but when I had to group or join data from the significantly larger raw data it became agonisingly slow - to the extent that you can literally make cups of tea in between runs.</p>
+<p>☕ ☕ ☕</p>
+<p>I then decided to switch to data.table for that specific part of the analysis, but felt somewhat uneasy with the fact that I would be making the code more complex by introducing another “style”. Then I realised that I could minimise the complexity and preserving the readability by using <strong>magrittr</strong> pipes (<code>%&gt;%</code>) together with <strong>data.table</strong> operations.</p>
+<p>Below is an example where I would take some data in an ordinary ‘base’ data frame, convert into a <strong>data.table</strong> object, run some analysis on it, and convert this back into a “tidyverse-friendly” <strong>tibble</strong> object.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(nycflights13)
+
+nycflights13<span class="op">::</span>flights <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># `flights` dataset from nycflights13</span>
+<span class="st">  </span>data.table<span class="op">::</span><span class="kw">as.data.table</span>() -&gt;<span class="st"> </span>flights_tb <span class="co"># Convert to data.table</span>
+
+<span class="co"># Run some analysis on delay times</span>
+<span class="co"># Create a new column called carrier_flight, then use it as a grouping variable</span>
+<span class="co"># Use data.table syntax</span>
+flights_tb <span class="op">%&gt;%</span>
+<span class="st">  </span>.[, carrier_flight <span class="op">:</span><span class="er">=</span><span class="st"> </span><span class="kw">paste0</span>(carrier,<span class="st">&quot;_&quot;</span>,flight)] <span class="op">%&gt;%</span>
+<span class="st">  </span>.[,.(<span class="dt">dep_delay =</span> <span class="kw">mean</span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),
+       <span class="dt">arr_delay =</span> <span class="kw">mean</span>(arr_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)), by =<span class="st"> </span>carrier_flight] <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">as_tibble</span>() <span class="co"># Convert this back to a tibble (tidyverse) object</span></code></pre></div>
+<pre><code>## # A tibble: 5,725 x 3
+##    carrier_flight dep_delay arr_delay
+##    &lt;chr&gt;              &lt;dbl&gt;     &lt;dbl&gt;
+##  1 UA_1545            1.51     -9.75 
+##  2 UA_1714            5.11     -2.68 
+##  3 AA_1141            2.10     -6.56 
+##  4 B6_725             0.975     1.66 
+##  5 DL_461            -0.709    -5.83 
+##  6 UA_1696           21.6       8    
+##  7 B6_507             0.789    -0.133
+##  8 EV_5708           16.9       8.85 
+##  9 B6_79             -0.441    -2.32 
+## 10 AA_301            -3.01    -10.9  
+## # ... with 5,715 more rows</code></pre>
+<p>My justification of such a ‘hybrid’ approach is that marries the readability of <strong>dplyr</strong> / <strong>magrittr</strong> pipes <code>%&gt;%</code> and the blazing speed of <strong>data.table</strong>. To be fair, doing everything in <strong>dplyr</strong> isn’t <em>always</em> slower, although there are clearly scenarios where data.table has a performance advantage. (See either <a href="https://tom.alby.de/en/r-dplyr-sparklyr-vs-data-table-performance/">Tom Alby’s post</a> on dplyr vs sparklyr vs data.table performance and <a href="https://www.gettinggeneticsdone.com/2015/01/microbenchmark-package-r-compare-runtime-r-expressions.html">Stephen Turner’s post</a> comparing various R expressions using <strong>microbenchmark</strong>)</p>
+<p>The other alternative is to stick with data.table entirely, but the way that <strong>data.table</strong> is chained “traditionally” does not feel as intuitive to me (hitting ‘return’ between each <code>][</code> chain:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">flights_tb[,carrier_flight<span class="op">:</span><span class="er">=</span><span class="kw">paste0</span>(carrier,<span class="st">&quot;_&quot;</span>,flight)
+           ][,.(<span class="dt">dep_delay =</span> <span class="kw">mean</span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),
+                <span class="dt">arr_delay =</span> <span class="kw">mean</span>(arr_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)), by =<span class="st"> </span>carrier_flight]</code></pre></div>
+<p>Given these circumstances, combining <code>%&gt;%</code> and <strong>data.table</strong> was an approach that worked really well for me.</p>
+</div>
+<div id="more-on-this-debate" class="section level2">
+<h2>More on this debate</h2>
+<p>I later discovered that quite a few others have also adopted this convention of combining <code>%&gt;%</code> and <strong>data.table</strong>:</p>
+<ul>
+<li><p><a href="https://stackoverflow.com/questions/33761872/break-data-table-chain-into-two-lines-of-code-for-readability/36873717#36873717">This</a> Stack Overflow response</p></li>
+<li><p><a href="https://www.gl-li.com/2017/07/25/compare-data.table-pipes-and-magrittr-pipes/">This</a> blog post by G L Li on the differences between <strong>data.table</strong> pipes and <strong>magrittr</strong> pipes</p></li>
+<li><p>Another <a href="http://jeffreyhorner.tumblr.com/post/120109449643/no-this-is-how-you-dplyr-and-datatable">blog</a> by Jeffrey Horner that talks about combining the two styles</p></li>
+</ul>
+<p>It’s good to know I’m not the only one!</p>
+<p>The wider divergence between the three syntax styles within R also is an interesting subject on its own. The question in this blog is mainly about <strong>tidyverse</strong> versus <strong>data.table</strong>, but that doesn’t mean there isn’t a debate around <strong>base R</strong>: Jozef Hajnala has a website called <a href="https://jozefhajnala.gitlab.io/r/categories/rcase4base/">case4base</a>, which as advertised, makes a case for using base R.</p>
+<p>But how should new users learn R? To what extent should we combine styles? When should we use which style? These are all important questions that the R community needs to think and discuss about as the number of R users continue to grow.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>See following link regarding packages that are loaded on start up: <a href="https://stat.ethz.ch/R-manual/R-patched/library/base/html/Startup.html" class="uri">https://stat.ethz.ch/R-manual/R-patched/library/base/html/Startup.html</a><a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Not based on actual research, just a hunch - but a 2018 article from <a href="https://www.waldrn.com/dplyr-vs-data-table/">David Waldron</a> seems to support my hunch.<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+</section>
+
+            </div>
+        </article>
+    </div>
+    
+<section id="sidebar">
+
+  
+  <section id="intro">
+    
+    
+      
+        <a href='/' class="logo"><img src="/img/main/cover.jpg" alt="Hugo Future Imperfect" /></a>
+      
+    
+    
+      <header>
+        <h2>Martin Chan</h2>
+        <p>Consultant at Rainmakers and <a href="https://twitter.com/martin_rstats">#rstats</a> enthusiast. <i class='fa fa-hand-peace-o'></i></p>
+      </header>
+    
+    
+      <ul class="icons">
+        
+          
+    <li><a href="/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a></li>
+
+
+        
+        
+  <li><a href="//github.com/martinctc" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//linkedin.com/in/https://www.linkedin.com/in/martin-chan-tc" target="_blank" title="LinkedIn" class="fa fa-linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//twitter.com/https://twitter.com/martin_rstats" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:martinchan53@gmail.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+  </section>
+
+  
+  <section class="recent-posts">
+    <div class="mini-posts">
+      <header>
+        <h3>Recent Posts</h3>
+      </header>
+      <div class="posts-container">
+        
+
+        
+          
+        
+
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/post/">Post</a>
+              </h3>
+              
+              <time class="published" datetime='2019-05-16'>
+                May 16, 2019
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/post/test-post/">Welcome!</a>
+              </h3>
+              
+              <time class="published" datetime='2019-05-16'>
+                May 16, 2019
+              </time>
+            </header>
+            
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/2019-04-19-a-short-r-package-review-rqda/">A Short Package Review - RQDA</a>
+              </h3>
+              
+              <time class="published" datetime='2019-04-15'>
+                April 15, 2019
+              </time>
+            </header>
+            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/2019-04-19-a-short-r-package-review-rqda/" class="image featured">
+            <img src="/img/2019/04/pic02.jpg" alt="">
+        </a>
+    
+
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/2019-04-13-first-post/">First Post</a>
+              </h3>
+              
+              <time class="published" datetime='2019-04-13'>
+                April 13, 2019
+              </time>
+            </header>
+            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/2019-04-13-first-post/" class="image featured">
+            <img src="/img/2019/04/pic03.jpg" alt="">
+        </a>
+    
+
+
+          </article>
+        
+          <article class="mini-post">
+            <header>
+              <h3>
+                <a href="/blog/creating-a-new-theme/">Creating a New Theme</a>
+              </h3>
+              
+              <time class="published" datetime='2014-09-28'>
+                September 28, 2014
+              </time>
+            </header>
+            
+    
+
+    
+        
+        
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+        
+        
+        
+
+        <a href="/blog/creating-a-new-theme/" class="image featured">
+            <img src="/img/2014/09/pic03.jpg" alt="">
+        </a>
+    
+
+
+          </article>
+        
+      </div>
+
+      
+        <a href=
+          
+            /blog/
+          
+        class="button">View more posts</a>
+      
+    </div>
+  </section>
+
+  
+  
+  
+  
+  
+    <section id="categories">
+      <header>
+        <h3>
+          <a href="/categories/">Categories</a>
+        </h3>
+      </header>
+        
+          
+        
+
+        
+        <p>
+          <article>
+            <header>
+              
+                Uncategorized
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/hugo/">hugo</a>
+                <span style="float:right;">4</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/go/">go</a>
+                <span style="float:right;">2</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/jekyll/">jekyll</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+        <p>
+          <article>
+            <header>
+              
+                <a href="/categories/r/">r</a>
+                <span style="float:right;">1</span>
+              
+            </header>
+          </article>
+        </p>
+        
+    </section>
+  
+  
+
+  
+  
+    <section id="mini-bio">
+      <h3>About</h3>
+      <p>I love exploring creative analytical and visualisation solutions </p>
+      <a href="/about/" class="button">Learn More</a>
+    </section>
+  
+
+  
+  <section id="footer">
+    
+      <ul class="icons">
+        
+          
+    <li><a href="/index.xml" type="application/rss+xml" target="_blank" title="RSS" class="fa fa-rss"></a></li>
+
+
+        
+        
+  <li><a href="//github.com/martinctc" target="_blank" title="GitHub" class="fa fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//linkedin.com/in/https://www.linkedin.com/in/martin-chan-tc" target="_blank" title="LinkedIn" class="fa fa-linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="//twitter.com/https://twitter.com/martin_rstats" target="_blank" title="Twitter" class="fa fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="mailto:martinchan53@gmail.com" title="Email" class="fa fa-envelope"></a></li>
+
+
+      </ul>
+    
+    <p class="copyright">
+      
+        &copy; 2019
+        
+          Martin Chan
+        
+      .
+      Powered by <a href="//gohugo.io" target="_blank">Hugo</a>
+    </p>
+  </section>
+</section>
+
+    </div>
+    <a id="back-to-top" href="#" class="fa fa-arrow-up fa-border fa-2x"></a>
+    
+
+    
+      
+    
+
+    
+      
+      
+      
+        <script src="//cdn.bootcss.com/highlight.js/9.11.0/highlight.min.js"></script>
+        
+        
+        
+        <script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/r.min.js"></script>
+        <script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/yaml.min.js"></script>
+        <script src="//cdn.bootcss.com/highlight.js/9.11.0/languages/css.min.js"></script>
+        <script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+      
+    
+    
+    
+      <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/skel/3.0.1/skel.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.25/jquery.fancybox.min.js"></script>
+      <script src="/js/util.js"></script>
+      <script src="/js/main.js"></script>
+      <script src="/js/backToTop.js"></script>
+    
+
+    
+      
+        
+      
+    
+
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+      <script src="//yihui.name/js/math-code.js"></script>
+<script async
+src="//cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+  </body>
+</html>
+

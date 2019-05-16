@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Post on Martin Chan</title>
+    <link>/post/</link>
+    <description>Recent content in Post on Martin Chan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 16 May 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Welcome!</title>
+      <link>/post/test-post/</link>
+      <pubDate>Thu, 16 May 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/test-post/</guid>
+      <description>I’m Martin Chan, Consultant at Rainmakers CSI. I am part of a team based in London where we help our clients solve strategic problems and grow their businesses profitably. Examples of what we do include opportunity sizing, customer segmentation and trend identification, but the problems we work with tend to be open-ended and therefore no solution is ever off-the-shelf.
+My interest is in identifying data science solutions (particularly, in R!</description>
+    </item>
+    
+  </channel>
+</rss>
