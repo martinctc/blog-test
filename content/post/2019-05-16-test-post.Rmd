@@ -1,10 +1,10 @@
 ---
-title: Welcome!
+title: Welcome to the jungle!
 author: Martin Chan
 date: '2019-05-16'
 slug: test-post
-categories: []
-tags: []
+categories: ["R"]
+tags: ["R Markdown", "plot", "regression"]
 description: ''
 featured: ''
 featuredalt: ''

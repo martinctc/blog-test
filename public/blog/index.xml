@@ -6,10 +6,20 @@
     <description>Recent content in Blog on Martin Chan</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Apr 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Using data.table with magrittr pipes - best of both worlds</title>
+      <link>/blog/test-post/</link>
+      <pubDate>Sun, 21 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/blog/test-post/</guid>
+      <description>Should we use magrittr pipes with data.table?
+Why ask the question?If you are fairly new to R, you might find it puzzling / intriguing that R questions on Stack Overflow tend to attract a range of solutions which all have different syntax “styles”, but almost all seem to be valid answers to some extent (as indicated by the number of upvotes to the solution). This is because there are three main syntax styles in the R universe:</description>
+    </item>
     
     <item>
       <title>A Short Package Review - RQDA</title>
